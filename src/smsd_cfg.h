@@ -371,8 +371,6 @@ char tb[SIZE_TB];
 char *check_memory_buffer;
 size_t check_memory_buffer_size;
 
-int os_cygwin;                  // 1 if we are on Cygwin.
-
 char language_file[PATH_MAX];   // File name of translated headers.
 char yes_chars[SIZE_HEADER];    // Characters which mean "yes" in the yesno() question.
 char no_chars[SIZE_HEADER];     // See details inside read_translation() function.

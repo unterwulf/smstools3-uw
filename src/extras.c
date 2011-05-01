@@ -594,12 +594,12 @@ int getfile(int trust_directory, char *dir, char *filename, int lock)
 
       sprintf(storage_key, "*%s*\n", tmpname);
 
+#ifdef CYGWIN
       // 3.1beta7, 3.0.10:
-      if (os_cygwin)
-        if (!check_access(tmpname))
-          chmod(tmpname, 0766);
-
-      if (!trust_directory && !os_cygwin && !file_is_writable(tmpname))
+      if (!check_access(tmpname))
+        chmod(tmpname, 0766);
+#else
+      if (!trust_directory && !file_is_writable(tmpname))
       {
         // Try to fix permissions.
         int result = 1;
@@ -638,6 +638,7 @@ int getfile(int trust_directory, char *dir, char *filename, int lock)
             unlink(tmp_filename);
         }
       }
+#endif /* !CYGWIN */
 
       if (!trust_directory && !file_is_writable(tmpname))
       {

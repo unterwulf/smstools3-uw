@@ -1,7 +1,8 @@
-# In case of windows, use os_cygwin=yes setting in the configuration file (smsd.conf).
-
 # Select your setup size:
 CFLAGS = -D NUMBER_OF_MODEMS=64
+
+# Uncomment for Cygwin
+# CFLAGS += -D CYGWIN
 
 # Uncomment for Solaris
 # CFLAGS += -D SOLARIS

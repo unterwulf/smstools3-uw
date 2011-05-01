@@ -225,7 +225,6 @@ void initcfg()
   strcpy(pidfile, "/var/run/smsd.pid");
 
   terminal = 0;
-  os_cygwin = 0;
 
   *international_prefixes = 0;
   *national_prefixes = 0;
@@ -719,12 +718,6 @@ int readcfg()
       if (strcasecmp(name,"terminal")==0)
       {
         if ((terminal = yesno_check(ask_value(0, name, value))) == -1)
-          startuperror(yesno_error, name, value);
-      }
-      else
-      if (strcasecmp(name,"os_cygwin")==0)
-      {
-        if ((os_cygwin = yesno_check(ask_value(0, name, value))) == -1)
           startuperror(yesno_error, name, value);
       }
       else
