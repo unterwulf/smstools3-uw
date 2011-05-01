@@ -25,7 +25,6 @@ Either version 2 of the License, or (at your option) any later version.
 
 #ifdef SOLARIS
 #include <sys/filio.h>
-#include <strings.h> // for bzero().
 #endif
 
 #include <stdio.h>
@@ -1122,7 +1121,7 @@ void setmodemparams()
   if (DEVICE_IS_SOCKET)
     return;
 
-  bzero(&newtio, sizeof(newtio));
+  memset(&newtio, '\0', sizeof(newtio));
   newtio.c_cflag = CS8 | CLOCAL | CREAD | O_NDELAY | O_NONBLOCK;
   if (DEVICE.rtscts)
     newtio.c_cflag |= CRTSCTS;
