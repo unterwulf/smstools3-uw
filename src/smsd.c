@@ -13,6 +13,7 @@ the GNU General Public License as published by the Free Software Foundation.
 Either version 2 of the License, or (at your option) any later version.
 */
 
+#include <config.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -1703,7 +1704,7 @@ void mainspooler()
             fail_text = "Destination is not whitelisted";
           }
           // Is the alphabet setting valid?
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
           else if (alphabet>3)
 #else
           else if (alphabet>2)
@@ -2910,7 +2911,7 @@ int received2file(char *line1, char *line2, char *filename, int *stored_concaten
       }
     }  
 
-#ifndef USE_ICONV
+#ifndef HAVE_ICONV
     // 3.1beta7, 3.0.9: decoding is always done:
     userdatalength = decode_ucs2(ascii, userdatalength);
     alphabet = 0;
@@ -3101,7 +3102,7 @@ int received2file(char *line1, char *line2, char *filename, int *stored_concaten
                   udlen=gsm2iso(ascii +userdatalength,udlen,ascii +userdatalength,sizeof(ascii) -userdatalength);
                 else if (alphabet == 2 && do_decode_unicode_text == 1)
                 {
-#ifndef USE_ICONV
+#ifndef HAVE_ICONV
                   udlen = decode_ucs2(ascii +userdatalength, udlen);
                   alphabet = 0;
 #else
@@ -4100,7 +4101,7 @@ int send1sms(int* quick, int* errorcounter)
     fail_text = "No destination";
     success = -2;
   }
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
   else if (alphabet>3)
 #else
   else if (alphabet>2)
@@ -4196,7 +4197,7 @@ int send1sms(int* quick, int* errorcounter)
         }
         // ------
 
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
         if (alphabet == 3)
         {
           if (is_ascii_gsm(text, textlen))
@@ -5269,7 +5270,7 @@ int cmd_to_modem(
 
 			if (is_ussd && DEVICE.ussd_convert == 1)
 			{
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
 				// If answer of USSD received in unicode format, convert it to utf8
 #define USSDOK "OK +CUSD: 2,\""
 				i = 0;
@@ -6442,7 +6443,7 @@ int main(int argc,char** argv)
 	{
 		char buffer[512];
 
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
 		if (!iconv_init())
 			exit(EXIT_FAILURE);
 #endif
@@ -6616,6 +6617,7 @@ int main(int argc,char** argv)
 #ifdef DEBUGMSG
   terminal = 1;
 #endif
+
   if (strcmp(logfile, "1") == 0 || strcmp(logfile, "2") == 0)
     terminal = 1;
   if (printstatus)
@@ -6644,7 +6646,7 @@ int main(int argc,char** argv)
     }
   }
 
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
   if (!iconv_init())
   {
     writelogfile(LOG_CRIT, 0, "Smsd mainprocess terminated because of the iconv_open() failure.");

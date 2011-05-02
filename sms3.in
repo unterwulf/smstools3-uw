@@ -19,14 +19,14 @@ GROUP=""
 
 # If an unpriviledged user is selected, make sure that next two
 # files are writable by that user:
-PIDFILE="/var/run/smsd.pid"
-INFOFILE="/var/run/smsd.working"
+PIDFILE="@localstatedir@/run/smsd.pid"
+INFOFILE="@localstatedir@/run/smsd.working"
 # Logfile can also be defined in here:
-LOGFILE="/var/log/smsd.log"
+LOGFILE="@localstatedir@/log/smsd.log"
 
-DAEMON=/usr/local/bin/smsd
+DAEMON=@bindir@/smsd
 # A program which turns power off for couple of seconds:
-RESETMODEMS=/usr/local/bin/smsd_resetmodems
+RESETMODEMS=@bindir@/smsd_resetmodems
 NAME=smsd
 PSOPT="-e"
 ECHO=echo

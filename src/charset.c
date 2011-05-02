@@ -13,13 +13,14 @@ the GNU General Public License as published by the Free Software Foundation.
 Either version 2 of the License, or (at your option) any later version.
 */
 
+#include <config.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <syslog.h>
 #include <ctype.h>
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
 #include <iconv.h>
 #include <errno.h>
 #endif
@@ -299,7 +300,7 @@ char iso_8859_15_chars[] =
 	0   , 0
 };
 
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
 static iconv_t iconv4ucs;	// UCS2->UTF8 descriptor
 static iconv_t iconv2ucs;	// UTF8->UCS2 descriptor
 #endif
@@ -729,7 +730,7 @@ int gsm2iso(char* source, int size, char* destination, int max)
   return dest_count;
 }
 
-#ifndef USE_ICONV
+#ifndef HAVE_ICONV
 int decode_ucs2(char *buffer, int len)
 {
   int i;
@@ -1046,7 +1047,7 @@ int decode_7bit_packed(
 
 // ******************************************************************************
 
-#ifdef USE_ICONV
+#ifdef HAVE_ICONV
 int iconv_init(void)
 {
   // do noy use 'UTF8' alias - it not supported in cygwin/mingw
@@ -1129,4 +1130,4 @@ int is_ascii_gsm(char* buf, size_t len)
       return 0;
   return 1;
 }
-#endif // USE_ICONV
+#endif // HAVE_ICONV

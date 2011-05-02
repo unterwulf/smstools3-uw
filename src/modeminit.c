@@ -13,6 +13,7 @@ the GNU General Public License as published by the Free Software Foundation.
 Either version 2 of the License, or (at your option) any later version.
 */
 
+#include <config.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -22,10 +23,6 @@ Either version 2 of the License, or (at your option) any later version.
 #include <time.h>
 #include "logging.h"
 #include "alarm.h"
-
-#ifdef SOLARIS
-#include <sys/filio.h>
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

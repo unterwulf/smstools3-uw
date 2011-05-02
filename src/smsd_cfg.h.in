@@ -16,15 +16,13 @@ Either version 2 of the License, or (at your option) any later version.
 #ifndef SMSD_CFG_H
 #define SMSD_CFG_H
 
+#include <config.h>
 #include <limits.h>
 #include <sys/types.h>
 #include <time.h>
 
-#ifndef __FreeBSD__
-#define DEFAULT_CONFIGFILE "/etc/smsd.conf"
-#else
-#define DEFAULT_CONFIGFILE "%%PREFIX%%/etc/smsd.conf"
-#endif
+#define DEFAULT_CONFIGFILE "@sysconfdir@/smsd.conf"
+#define LOCALSTATEDIR "@localstatedir@"
 
 #define DATETIME_DEFAULT "%y-%m-%d %H:%M:%S"
 #define LOGTIME_DEFAULT "%Y-%m-%d %H:%M:%S"

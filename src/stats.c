@@ -13,6 +13,7 @@ the GNU General Public License as published by the Free Software Foundation.
 Either version 2 of the License, or (at your option) any later version.
 */
 
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

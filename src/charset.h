@@ -16,6 +16,8 @@ Either version 2 of the License, or (at your option) any later version.
 #ifndef CHARSET_H
 #define CHARSET_H
 
+#include <config.h>
+
 char logch_buffer[8192];
 
 // Logging is not used externally, but it's placed to the end of source file.
@@ -41,7 +43,7 @@ int iso2utf8_file(FILE *fp, char *ascii, int userdatalength);
 int decode_7bit_packed(char *text, char *dest, size_t size_dest);
 int encode_7bit_packed(char *text, char *dest, size_t size_dest);
 
-#ifndef USE_ICONV
+#ifndef HAVE_ICONV
 int decode_ucs2(char *buffer, int len);
 #else
 int iconv_init(void);

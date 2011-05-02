@@ -13,6 +13,7 @@ the GNU General Public License as published by the Free Software Foundation.
 Either version 2 of the License, or (at your option) any later version.
 */
 
+#include <config.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -1658,7 +1659,7 @@ int splitpdu(char *pdu, char *mode, int *alphabet, char *sendr, char *date, char
                 else
                 {
                   memcpy(ascii, message, message_length);
-#ifndef USE_ICONV
+#ifndef HAVE_ICONV
                   ascii[message_length] = 0;
                   i = decode_ucs2(ascii, message_length);
 #else

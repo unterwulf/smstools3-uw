@@ -13,6 +13,7 @@ the GNU General Public License as published by the Free Software Foundation.
 Either version 2 of the License, or (at your option) any later version.
 */
 
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -159,12 +160,12 @@ void initcfg()
   log_unmodified = 0;
   alarmlevel=LOG_WARNING;
 
-  strcpy(d_spool,"/var/spool/sms/outgoing");
-  strcpy(d_incoming,"/var/spool/sms/incoming");
+  strncpy(d_spool, LOCALSTATEDIR "/spool/sms/outgoing", sizeof(d_spool) - 1);
+  strncpy(d_incoming, LOCALSTATEDIR "/spool/sms/incoming", sizeof(d_incoming) - 1);
   *d_report = 0;
   *d_phonecalls = 0;
   *d_saved = 0;
-  strcpy(d_checked,"/var/spool/sms/checked");
+  strncpy(d_checked, LOCALSTATEDIR "/spool/sms/checked", sizeof(d_checked) - 1);
   d_failed[0]=0;
   d_sent[0]=0;
   d_stats[0]=0;
@@ -221,8 +222,8 @@ void initcfg()
   username[0] = 0;
   groupname[0] = 0;
 
-  strcpy(infofile, "/var/run/smsd.working");
-  strcpy(pidfile, "/var/run/smsd.pid");
+  strncpy(infofile, LOCALSTATEDIR "/run/smsd.working", sizeof(infofile) - 1);
+  strncpy(pidfile, LOCALSTATEDIR "/run/smsd.pid", sizeof(pidfile) - 1);
 
   terminal = 0;
 
@@ -2370,9 +2371,9 @@ int startup_check(int result)
             wrlogfile(&result, "Devices %s and %s has the same port ( device = %s ).", devices[x].name, devices[y].name, devices[x].device);
       }
 
-#ifndef USE_ICONV
+#ifndef HAVE_ICONV
       if (devices[x].ussd_convert == 1)
-        wrlogfile(&result, "Device %s uses ussd_convert = 1, but it's only available when USE_ICONV is defined.", devices[x].name);
+        wrlogfile(&result, "Device %s uses ussd_convert = 1, but it's only available when HAVE_ICONV is defined.", devices[x].name);
 #endif
 
       // 3.1.12: Both cpas and clcc cannot be defined.
