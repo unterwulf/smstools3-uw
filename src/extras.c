@@ -34,6 +34,14 @@ Either version 2 of the License, or (at your option) any later version.
 #include "logging.h"
 #include "alarm.h"
 
+#ifndef NAME_MAX
+// If the system has no limitation on the maximum length of a filename,
+// we have to choose it ourselves. The value 255 is just a best guess
+// that should be enough for the most of filesystems and sensible people.
+// At least it looks more reasonable than _POSIX_NAME_MAX that is 14.
+#define NAME_MAX 255
+#endif
+
 int yesno(char *value)
 {
   extern char yes_chars[];
@@ -561,6 +569,9 @@ int getfile(int trust_directory, char *dir, char *filename, int lock)
 #ifdef DEBUGMSG
       printf("**readdir(): %s\n", ent->d_name);
 #endif
+      if (strlen(ent->d_name) >= sizeof(candidates[0].fname))
+        continue;
+
       sprintf(tmpname, "%s/%s", dir, ent->d_name);
 
       // 3.1.12:
